@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import connectDB from "./config/db";
 import studentRoutes from "./routes/studentRoutes";
 
+import { errorHandler } from "./middleware/errorHandler";
+
 dotenv.config();
 
 const app = express();
@@ -18,6 +20,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/students", studentRoutes);
+
+app.use(errorHandler);
 
 const startServer = async (): Promise<void> => {
     await connectDB();

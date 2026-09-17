@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { 
     getAllStudents, 
     createStudent,  
@@ -8,7 +8,7 @@ import {
  } 
     from "../services/studentService";
 
-export const getStudents = async ( req: Request, res: Response ): Promise<void> => {
+export const getStudents = async ( req: Request, res: Response, next: NextFunction ): Promise<void> => {
     try {
         const students = await getAllStudents();
         res.status(200).json({
@@ -16,12 +16,7 @@ export const getStudents = async ( req: Request, res: Response ): Promise<void> 
             data: students
         });
     } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            success: false,
-            message: "Failed to retrieve students"
-        });
+        next(error);
     }
 };
 
@@ -48,7 +43,8 @@ export const createStudentController = async (
 
 export const getStudent = async ( 
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
         const student = await getStudentById (req.params.id as string);
@@ -66,18 +62,14 @@ export const getStudent = async (
             data: student
         });
     } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            success: false,
-            message: "Failed to retrieve student"
-        });
+        next(error);
     }
 };
 
 export const updateStudentController = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
         const student = await updateStudent(
@@ -98,18 +90,14 @@ export const updateStudentController = async (
             data: student
         });
     } catch (error) {
-        console.error(error);
-
-        res.status(400).json({
-            success: false,
-            message: "Failed to update student"
-        });
+        next(error);
     }
 };
 
 export const deleteStudentController = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
         const student = await deleteStudent(req.params.id as string);
@@ -127,11 +115,7 @@ export const deleteStudentController = async (
             message: "Student deleted successfully"
         });
     } catch (error) {
-        console.error(error);
+        next(error);
 
-        res.status(500).json({
-            success: false,
-            message: "Failed to delete student"
-        });
     }
 };
