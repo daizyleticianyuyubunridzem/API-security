@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
 import studentRoutes from "./modules/students/student.routes";
+import authRoutes from "./modules/auth/auth.routes";
 
 import { errorHandler } from "./middleware/errorHandler";
 
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/students", studentRoutes);
+app.use("/api/auth", authRoutes);
 
 app.use(errorHandler);
 
