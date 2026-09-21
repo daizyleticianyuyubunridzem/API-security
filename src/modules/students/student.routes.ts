@@ -6,9 +6,11 @@ import {
     updateStudentController, 
     deleteStudentController
 } 
-from "../controllers/studentController";
+from "./student.controller";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 const router = express.Router();
+router.use(authMiddleware);
 
 router.get("/", getStudents);
 router.post("/", createStudentController);

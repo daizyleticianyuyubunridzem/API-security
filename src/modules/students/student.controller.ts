@@ -6,8 +6,7 @@ import {
     updateStudent,
     deleteStudent
  } 
-    from "../services/studentService";
-
+   from "./student.service";
 export const getStudents = async ( req: Request, res: Response, next: NextFunction ): Promise<void> => {
     try {
         const students = await getAllStudents();

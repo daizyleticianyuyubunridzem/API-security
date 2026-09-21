@@ -1,7 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
-import studentRoutes from "./routes/studentRoutes";
+import studentRoutes from "./modules/students/student.routes";
+import authRoutes from "./modules/auth/auth.routes";
 
 import { errorHandler } from "./middleware/errorHandler";
 
@@ -11,8 +12,6 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-connectDB;
-
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -20,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/students", studentRoutes);
+app.use("/api/auth", authRoutes);
 
 app.use(errorHandler);
 
