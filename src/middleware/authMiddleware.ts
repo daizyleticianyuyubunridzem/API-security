@@ -17,8 +17,10 @@ export const authMiddleware = (
             return;
         }
 
+        // Extract the JWT from the Authorization header
         const token = authHeader.split(" ")[1];
-
+        
+        // Verify that the token is valid and has not expired
         const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET as string
